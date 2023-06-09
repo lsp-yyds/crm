@@ -8,4 +8,6 @@ import java.util.Map;
 
 public interface RoleMapper extends BaseMapper<Role, Integer> {
     List<Map<String, Object>> queryAllRoles(Integer userId);
+
+    Role selectByRoleName(String roleName);
 }

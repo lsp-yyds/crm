@@ -492,7 +492,8 @@
         </where>
     </select>
 
-    <insert id="insertSelective" parameterType="com.gatsby.crm.vo.User">
+    <insert id="insertSelective" parameterType="com.gatsby.crm.vo.User" useGeneratedKeys="true" keyProperty="id"
+            keyColumn="id">
         insert into t_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
