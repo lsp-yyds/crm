@@ -2,6 +2,7 @@ package com.gatsby.crm;
 
 import com.alibaba.fastjson.JSON;
 import com.gatsby.crm.base.ResultInfo;
+import com.gatsby.crm.exceptions.AuthException;
 import com.gatsby.crm.exceptions.NoLoginException;
 import com.gatsby.crm.exceptions.ParamsException;
 import org.springframework.stereotype.Component;
@@ -54,6 +55,10 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
                     ParamsException pe = (ParamsException) e;
                     modelAndView.addObject("code", pe.getCode());
                     modelAndView.addObject("msg", pe.getMsg());
+                } else if (e instanceof AuthException) {
+                    AuthException ae = (AuthException) e;
+                    modelAndView.addObject("code", ae.getCode());
+                    modelAndView.addObject("msg", ae.getMsg());
                 }
 
                 return modelAndView;
@@ -66,6 +71,10 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
                     ParamsException pe = (ParamsException) e;
                     resultInfo.setCode(pe.getCode());
                     resultInfo.setMsg(pe.getMsg());
+                } else if (e instanceof AuthException) {
+                    AuthException ae = (AuthException) e;
+                    resultInfo.setCode(ae.getCode());
+                    resultInfo.setMsg(ae.getMsg());
                 }
 
                 resp.setContentType("application/json;charset=UTF-8");

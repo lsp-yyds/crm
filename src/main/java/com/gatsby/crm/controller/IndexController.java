@@ -1,6 +1,7 @@
 package com.gatsby.crm.controller;
 
 import com.gatsby.crm.base.BaseController;
+import com.gatsby.crm.service.PermissionService;
 import com.gatsby.crm.service.UserService;
 import com.gatsby.crm.utils.LoginUserUtil;
 import com.gatsby.crm.vo.User;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @PACKAGE_NAME: com.gatsby.crm
@@ -22,6 +24,9 @@ public class IndexController extends BaseController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private PermissionService permissionService;
 
     @RequestMapping("index")
     public String index() {
@@ -40,6 +45,9 @@ public class IndexController extends BaseController {
 
         User user = userService.selectByPrimaryKey(userId);
         req.getSession().setAttribute("user", user);
+
+        List<String> permissions = permissionService.queryUserHasPermissionByUserId(userId);
+        req.getSession().setAttribute("permissions", permissions);
 
         return "main";
     }
